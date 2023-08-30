@@ -3,7 +3,8 @@ import { DifficultyLevel } from './models/difficulty-level.model';
 import { Category } from './models/category.model';
 import { ReplaySubject, takeUntil } from 'rxjs';
 import { QuizService } from './services/quiz.service';
-import { ApiResponse } from './models/api-response.model';
+import { ApiCategoriesResponse } from './models/api-categories-response.model';
+import { ApiQuestionsResponse } from './models/api-questions-response.model';
 
 @Component({
   selector: 'app-quiz',
@@ -21,6 +22,8 @@ export class QuizComponent implements OnInit {
   ];
   selectedDifficultyLevel: DifficultyLevel | undefined;
 
+  displayedQuestions: any;
+
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(0);
 
   constructor(private quizService: QuizService) {}
@@ -37,8 +40,26 @@ export class QuizComponent implements OnInit {
   getQuizCategories() {
     const quizCategories$ = this.quizService.getQuizCategories();
     quizCategories$.pipe(takeUntil(this.destroyed$)).subscribe({
-      next: (res: ApiResponse) => {
+      next: (res: ApiCategoriesResponse) => {
         this.categories = res.trivia_categories;
+      },
+    });
+  }
+
+  createQuiz() {
+    this.getRelevantQuestions();
+  }
+
+  getRelevantQuestions() {
+    if (!this.selectedCategory || !this.selectedDifficultyLevel) return;
+
+    const relevantQuestions$ = this.quizService.getRelevantQuestions(
+      this.selectedCategory!.id,
+      this.selectedDifficultyLevel!.name.toLowerCase()
+    );
+    relevantQuestions$.pipe(takeUntil(this.destroyed$)).subscribe({
+      next: (res: ApiQuestionsResponse) => {
+        console.log(res);
       },
     });
   }

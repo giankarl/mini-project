@@ -1,5 +1,5 @@
 import { Category } from './category.model';
 
-export interface ApiResponse {
+export interface ApiCategoriesResponse {
   trivia_categories: Category[];
 }

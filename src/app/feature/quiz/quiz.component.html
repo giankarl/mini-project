@@ -6,7 +6,7 @@
       class="mr-2"
       [options]="categories"
       [(ngModel)]="selectedCategory"
-      placeholder="Select a Category"
+      placeholder="Select a category"
       optionLabel="name"
     ></p-dropdown>
     <p-dropdown
@@ -17,6 +17,6 @@
       placeholder="Select a difficulty"
       optionLabel="name"
     ></p-dropdown
-    ><p-button id="createBtn" label="Submit"></p-button>
+    ><p-button id="createBtn" label="Create" (click)="createQuiz()"></p-button>
   </div>
 </div>
