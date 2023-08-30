@@ -1,6 +1,6 @@
 <div class="main-container mt-10 pt-10">
   <h2 class="text-3xl mb-10 text-center">QUIZ MAKER</h2>
-  <div class="mb-9 text-center">
+  <div class="options-field mb-9 text-center">
     <p-dropdown
       id="difficultySelect"
       class="mr-2"
@@ -17,6 +17,23 @@
       placeholder="Select a difficulty"
       optionLabel="name"
     ></p-dropdown
-    ><p-button id="createBtn" label="Create" (click)="createQuiz()"></p-button>
+    ><p-button
+      class="create-button"
+      id="createBtn"
+      label="Create"
+      (click)="createQuiz()"
+    ></p-button>
+  </div>
+  <div class="questions-field text-center">
+    <div *ngFor="let question of displayedQuestions; let i = index">
+      <span> {{ i + 1 }}. {{ question.question }} </span>
+      <div class="mt-2 mb-6">
+        <p-button
+          class="mr-2 answer-button"
+          *ngFor="let answer of randomizeAnswers(question)"
+          label="{{ answer }}"
+        ></p-button>
+      </div>
+    </div>
   </div>
 </div>

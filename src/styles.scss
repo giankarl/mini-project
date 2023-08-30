@@ -10,12 +10,26 @@ body {
   font-family: var(--font-family);
 }
 
-.p-button {
-  color: #6c757d;
-  border-color: #ced4da;
-  &:hover {
-    background-color: #f9f9fa !important;
-    border-color: #3b82f6 !important;
-    color: #6c757d !important;
+.create-button {
+  .p-button {
+    color: #6c757d;
+    border-color: #ced4da;
+    &:hover {
+      background-color: #f9f9fa !important;
+      border-color: #3b82f6 !important;
+      color: #6c757d !important;
+    }
+  }
+}
+
+.answer-button {
+  .p-button {
+    margin-top: 0.5rem;
+    color: rgb(122, 161, 122);
+    border-color: rgb(122, 161, 122);
+    &:hover {
+      background-color: rgb(122, 161, 122) !important;
+      border-color: rgb(122, 161, 122) !important;
+    }
   }
 }
