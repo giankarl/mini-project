@@ -64,23 +64,22 @@ export class QuizComponent implements OnInit {
     );
     relevantQuestions$.pipe(takeUntil(this.destroyed$)).subscribe({
       next: (res: ApiQuestionsResponse) => {
+        res.results.map((element) => {
+          element.question = this.decodeHtmlEntities(element.question)!;
+          element.correct_answer = this.decodeHtmlEntities(
+            element.correct_answer
+          )!;
+          element.incorrect_answers.forEach((incorrect_answer) => {
+            incorrect_answer = this.decodeHtmlEntities(incorrect_answer)!;
+          });
+        });
+
         this.displayedQuestions = res.results;
         this.displayedQuestions.forEach((question) => {
           question.all_shuffled_answers = this.randomizeAnswers(question);
         });
       },
     });
-  }
-
-  randomizeAnswers(question: Question): { name: string; selected: boolean }[] {
-    const allAnswers = [...question.incorrect_answers, question.correct_answer];
-
-    return allAnswers
-      .sort(() => Math.random() - 0.5)
-      .map((answer) => ({
-        name: answer,
-        selected: false,
-      }));
   }
 
   selectAnswer(question: Question, selectedAnswer: string) {
@@ -103,5 +102,24 @@ export class QuizComponent implements OnInit {
       JSON.stringify(this.displayedQuestions)
     );
     this.router.navigate([`Results`]);
+  }
+
+  private decodeHtmlEntities(encodedString: any) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(encodedString, 'text/html');
+    return doc.documentElement.textContent;
+  }
+
+  private randomizeAnswers(
+    question: Question
+  ): { name: string; selected: boolean }[] {
+    const allAnswers = [...question.incorrect_answers, question.correct_answer];
+
+    return allAnswers
+      .sort(() => Math.random() - 0.5)
+      .map((answer) => ({
+        name: answer,
+        selected: false,
+      }));
   }
 }
