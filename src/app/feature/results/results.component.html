@@ -1,0 +1,29 @@
+<div class="main-container mt-10 py-10">
+  <h2 class="text-3xl mb-10 text-center">RESULTS</h2>
+  <div class="results-field mb-10 text-center">
+    <div *ngFor="let result of displayedResults; let i = index">
+      <span> {{ i + 1 }}. {{ result.question }} </span>
+      <div class="mt-2 mb-6">
+        <p-toggleButton
+          class="mr-2 answer-button"
+          *ngFor="let answer of result.all_shuffled_answers"
+          [class.correct-answer]="answer.name === result.correct_answer"
+          [class.wrong-answer]="
+            answer.selected && answer.name !== result.correct_answer
+          "
+          onLabel="{{ answer.name }}"
+          offLabel="{{ answer.name }}"
+          [(ngModel)]="answer.selected"
+          [disabled]="true"
+        ></p-toggleButton>
+      </div>
+    </div>
+  </div>
+  <div class="new-quiz-button-field text-center">
+    <p-button
+      class="new-quiz-button"
+      label="Create a new quiz"
+      (click)="createNewQuiz()"
+    ></p-button>
+  </div>
+</div>

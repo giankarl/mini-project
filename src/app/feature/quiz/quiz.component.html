@@ -1,4 +1,4 @@
-<div class="main-container mt-10 pt-10">
+<div class="main-container mt-10 py-10">
   <h2 class="text-3xl mb-10 text-center">QUIZ MAKER</h2>
   <div class="options-field mb-9 text-center">
     <p-dropdown
@@ -24,17 +24,26 @@
       (click)="createQuiz()"
     ></p-button>
   </div>
-  <div class="questions-field text-center">
+  <div class="questions-field mb-10 text-center">
     <div *ngFor="let question of displayedQuestions; let i = index">
       <span> {{ i + 1 }}. {{ question.question }} </span>
       <div class="mt-2 mb-6">
         <p-toggleButton
           class="mr-2 answer-button"
           *ngFor="let answer of question.all_shuffled_answers"
-          onLabel="{{ answer }}"
-          offLabel="{{ answer }}"
+          onLabel="{{ answer.name }}"
+          offLabel="{{ answer.name }}"
+          [(ngModel)]="answer.selected"
+          (onChange)="selectAnswer(question, answer.name)"
         ></p-toggleButton>
       </div>
     </div>
+  </div>
+  <div *ngIf="displaySubmitButton" class="submit-button-field text-center">
+    <p-button
+      class="submit-button"
+      label="Submit"
+      (click)="submitQuiz()"
+    ></p-button>
   </div>
 </div>

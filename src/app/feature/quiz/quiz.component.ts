@@ -6,6 +6,8 @@ import { QuizService } from './services/quiz.service';
 import { ApiCategoriesResponse } from './models/api-categories-response.model';
 import { ApiQuestionsResponse } from './models/api-questions-response.model';
 import { Question } from './models/question.model';
+import { Router } from '@angular/router';
+import { QuizStateService } from 'src/app/core/services/quiz-state.service';
 
 @Component({
   selector: 'app-quiz',
@@ -25,9 +27,15 @@ export class QuizComponent implements OnInit {
 
   displayedQuestions: Question[] = [];
 
+  displaySubmitButton: boolean = false;
+
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(0);
 
-  constructor(private quizService: QuizService) {}
+  constructor(
+    private quizService: QuizService,
+    private router: Router,
+    private quizStateService: QuizStateService
+  ) {}
 
   ngOnInit() {
     this.getQuizCategories();
@@ -64,13 +72,39 @@ export class QuizComponent implements OnInit {
         this.displayedQuestions.forEach((question) => {
           question.all_shuffled_answers = this.randomizeAnswers(question);
         });
-        console.log(this.displayedQuestions);
       },
     });
   }
 
-  randomizeAnswers(question: Question): string[] {
+  randomizeAnswers(question: Question): { name: string; selected: boolean }[] {
     const allAnswers = [...question.incorrect_answers, question.correct_answer];
-    return allAnswers.sort(() => Math.random() - 0.5);
+
+    return allAnswers
+      .sort(() => Math.random() - 0.5)
+      .map((answer) => ({
+        name: answer,
+        selected: false,
+      }));
+  }
+
+  selectAnswer(question: Question, selectedAnswer: string) {
+    question.all_shuffled_answers!.forEach(
+      (answer: { name: string; selected: boolean }) => {
+        if (answer.name !== selectedAnswer) {
+          answer.selected = false;
+        }
+      }
+    );
+
+    this.displaySubmitButton = this.displayedQuestions.every((question) =>
+      question.all_shuffled_answers?.some((answer) => answer.selected)
+    );
+  }
+
+  submitQuiz() {
+    this.quizStateService.questionsWithSelectedAnswers.next(
+      this.displayedQuestions
+    );
+    this.router.navigate([`Results`]);
   }
 }

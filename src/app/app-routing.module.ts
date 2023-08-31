@@ -15,6 +15,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./feature/quiz/quiz.module').then((m) => m.QuizModule),
       },
+      {
+        path: 'Results',
+        loadChildren: () =>
+          import('./feature/results/results.module').then(
+            (m) => m.ResultsModule
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: 'Quiz' },
