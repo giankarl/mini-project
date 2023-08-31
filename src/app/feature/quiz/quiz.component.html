@@ -28,11 +28,12 @@
     <div *ngFor="let question of displayedQuestions; let i = index">
       <span> {{ i + 1 }}. {{ question.question }} </span>
       <div class="mt-2 mb-6">
-        <p-button
+        <p-toggleButton
           class="mr-2 answer-button"
-          *ngFor="let answer of randomizeAnswers(question)"
-          label="{{ answer }}"
-        ></p-button>
+          *ngFor="let answer of question.all_shuffled_answers"
+          onLabel="{{ answer }}"
+          offLabel="{{ answer }}"
+        ></p-toggleButton>
       </div>
     </div>
   </div>

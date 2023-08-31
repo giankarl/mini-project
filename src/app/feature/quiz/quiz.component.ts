@@ -61,6 +61,9 @@ export class QuizComponent implements OnInit {
     relevantQuestions$.pipe(takeUntil(this.destroyed$)).subscribe({
       next: (res: ApiQuestionsResponse) => {
         this.displayedQuestions = res.results;
+        this.displayedQuestions.forEach((question) => {
+          question.all_shuffled_answers = this.randomizeAnswers(question);
+        });
         console.log(this.displayedQuestions);
       },
     });
@@ -68,10 +71,6 @@ export class QuizComponent implements OnInit {
 
   randomizeAnswers(question: Question): string[] {
     const allAnswers = [...question.incorrect_answers, question.correct_answer];
-    // for (let i = allAnswers.length - 1; i > 0; i--) {
-    //   const j = Math.floor(Math.random() * (i + 1));
-    //   [allAnswers[i], allAnswers[j]] = [allAnswers[j], allAnswers[i]];
-    // }
     return allAnswers.sort(() => Math.random() - 0.5);
   }
 }

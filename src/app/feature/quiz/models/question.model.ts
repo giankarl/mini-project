@@ -5,6 +5,7 @@ export class Question {
   incorrect_answers: string[] = [];
   question: string = '';
   type: string = '';
+  all_shuffled_answers?: string[] = [];
 
   constructor(json: any) {
     if (json) {
@@ -14,6 +15,7 @@ export class Question {
       this.incorrect_answers = json.incorrect_answers ?? [];
       this.question = json.question ?? '';
       this.type = json.type ?? '';
+      this.all_shuffled_answers = json.all_shuffled_answers ?? [];
     }
   }
 }
