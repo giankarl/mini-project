@@ -7,7 +7,6 @@ import { ApiCategoriesResponse } from './models/api-categories-response.model';
 import { ApiQuestionsResponse } from './models/api-questions-response.model';
 import { Question } from './models/question.model';
 import { Router } from '@angular/router';
-import { QuizStateService } from 'src/app/core/services/quiz-state.service';
 
 @Component({
   selector: 'app-quiz',
@@ -31,13 +30,10 @@ export class QuizComponent implements OnInit {
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(0);
 
-  constructor(
-    private quizService: QuizService,
-    private router: Router,
-    private quizStateService: QuizStateService
-  ) {}
+  constructor(private quizService: QuizService, private router: Router) {}
 
   ngOnInit() {
+    sessionStorage.removeItem('questionsWithSelectedAnswers');
     this.getQuizCategories();
   }
 
@@ -102,8 +98,9 @@ export class QuizComponent implements OnInit {
   }
 
   submitQuiz() {
-    this.quizStateService.questionsWithSelectedAnswers.next(
-      this.displayedQuestions
+    sessionStorage.setItem(
+      'questionsWithSelectedAnswers',
+      JSON.stringify(this.displayedQuestions)
     );
     this.router.navigate([`Results`]);
   }

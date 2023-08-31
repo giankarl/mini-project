@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { resultsGuard } from './core/guards/results.guard';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'Results',
+        canActivate: [resultsGuard],
         loadChildren: () =>
           import('./feature/results/results.module').then(
             (m) => m.ResultsModule
