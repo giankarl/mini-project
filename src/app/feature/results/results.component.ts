@@ -11,6 +11,7 @@ import { Question } from '../quiz/models/question.model';
 })
 export class ResultsComponent implements OnInit, OnDestroy {
   displayedResults: Question[] = [];
+  correctAnswers: number = 0;
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(0);
 
@@ -24,6 +25,16 @@ export class ResultsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         this.displayedResults = res;
+        this.correctAnswers = 0;
+        this.displayedResults.forEach((result) => {
+          result.all_shuffled_answers?.forEach((answer) => {
+            if (
+              answer.selected === true &&
+              answer.name === result.correct_answer
+            )
+              this.correctAnswers += 1;
+          });
+        });
       });
   }
 
@@ -31,18 +42,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
-
-  // checkIfIsSelectedAnswerIsWrong(
-  //   answer: { name: string; selected: boolean },
-  //   result: Question
-  // ) {
-  //   console.log(result);
-  //   if (answer.selected) {
-  //     if (answer.name !== result.correct_answer) return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   createNewQuiz() {
     this.router.navigate([`Quiz`]);

@@ -27,8 +27,8 @@ body {
     opacity: 1 !important;
     margin-top: 0.5rem !important;
     color: #ffffff !important;
-    background-color: rgb(122, 161, 122) !important;
-    border-color: rgb(122, 161, 122) !important;
+    background-color: rgb(47, 173, 47) !important;
+    border-color: rgb(47, 173, 47) !important;
   }
 }
 
@@ -46,23 +46,22 @@ body {
   .p-button {
     opacity: 1 !important;
     margin-top: 0.5rem !important;
-    color: rgb(122, 161, 122);
-    border-color: rgb(122, 161, 122);
+    color: rgb(47, 173, 47);
+    border-color: rgb(47, 173, 47);
     &:hover {
-      color: rgb(122, 161, 122) !important;
+      color: rgb(47, 173, 47) !important;
       background-color: rgb(215, 241, 215) !important;
-      border-color: rgb(122, 161, 122) !important;
+      border-color: rgb(47, 173, 47) !important;
     }
   }
 
   .p-button:focus {
-    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgb(122, 161, 122),
-      0 1px 2px 0 black;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgb(47, 173, 47), 0 1px 2px 0 black;
   }
 
   .p-togglebutton.p-button.p-highlight {
-    background-color: rgb(122, 161, 122);
-    border-color: rgb(122, 161, 122);
+    background-color: rgb(47, 173, 47);
+    border-color: rgb(47, 173, 47);
     &:hover {
       color: white !important;
     }
@@ -84,4 +83,16 @@ body {
   .p-button:focus {
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #6c757d, 0 1px 2px 0 black;
   }
+}
+
+.fail-quiz {
+  background-color: red;
+  color: white;
+}
+.pass-quiz {
+  background-color: yellow;
+}
+.success-quiz {
+  background-color: rgb(47, 173, 47);
+  color: white;
 }

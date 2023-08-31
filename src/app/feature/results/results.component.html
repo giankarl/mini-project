@@ -19,6 +19,15 @@
       </div>
     </div>
   </div>
+  <div *ngIf="displayedResults.length > 0" class="score-field text-center mb-6">
+    <span
+      class="text-l font-semibold py-1 px-20 rounded-md"
+      [class.fail-quiz]="correctAnswers < 2"
+      [class.pass-quiz]="correctAnswers == 2 || correctAnswers == 3"
+      [class.success-quiz]="correctAnswers > 3"
+      >You scored {{ correctAnswers }} out of 5</span
+    >
+  </div>
   <div class="new-quiz-button-field text-center">
     <p-button
       class="new-quiz-button"
