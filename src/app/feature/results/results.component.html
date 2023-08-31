@@ -1,4 +1,4 @@
-<div class="main-container mt-10 py-10">
+<div class="main-container mt-10 py-5">
   <h2 class="text-3xl mb-10 text-center">RESULTS</h2>
   <div class="results-field mb-10 text-center">
     <div *ngFor="let result of displayedResults; let i = index">
@@ -19,7 +19,10 @@
       </div>
     </div>
   </div>
-  <div *ngIf="displayedResults.length > 0" class="score-field text-center mb-6">
+  <div
+    *ngIf="displayedResults && displayedResults.length > 0"
+    class="score-field text-center mb-6"
+  >
     <span
       class="text-l font-semibold py-1 px-20 rounded-md"
       [class.fail-quiz]="correctAnswers < 2"

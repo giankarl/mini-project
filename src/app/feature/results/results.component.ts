@@ -21,12 +21,13 @@ export class ResultsComponent implements OnInit, OnDestroy {
       sessionStorage.getItem('questionsWithSelectedAnswers')!
     );
     this.correctAnswers = 0;
-    this.displayedResults.forEach((result) => {
-      result.all_shuffled_answers?.forEach((answer) => {
-        if (answer.selected === true && answer.name === result.correct_answer)
-          this.correctAnswers += 1;
+    if (this.displayedResults)
+      this.displayedResults.forEach((result) => {
+        result.all_shuffled_answers?.forEach((answer) => {
+          if (answer.selected === true && answer.name === result.correct_answer)
+            this.correctAnswers += 1;
+        });
       });
-    });
   }
 
   ngOnDestroy(): void {
