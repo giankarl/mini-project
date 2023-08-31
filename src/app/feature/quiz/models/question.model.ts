@@ -7,7 +7,7 @@ export class Question {
   type: string = '';
   all_shuffled_answers?: { name: string; selected: boolean }[] = [];
 
-  constructor(json: any) {
+  constructor(json: Question) {
     if (json) {
       this.category = json.category ?? '';
       this.correct_answer = json.correct_answer ?? '';
